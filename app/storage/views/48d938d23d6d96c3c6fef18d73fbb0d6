@@ -1,0 +1,77 @@
+ 
+<?php $__env->startSection('navbar'); ?>
+@parent
+ 
+<?php $__env->stopSection(); ?>
+ 
+<?php $__env->startSection('content'); ?>
+<div class="thumbnail">
+    <?php if (!empty($value->picture)): ?>
+    <img class="img-responsive" width="800" src="pictures/<?php echo $post->picture; ?>" alt="">
+    <?php endif; ?>
+    <div class="caption-full">
+        <h3><a href="<?php echo URL::to('post'); ?>/<?php echo $post->id; ?>"><?php echo $post->title; ?></a></h3>
+        </h4>
+        <?php echo $post->content; ?>
+    </div>
+    <div class="ratings">                        
+    <hr>
+        <p><?php $cat = Category::find($post->category_id); ?>
+            <a href="<?php echo URL::to('kategori'); ?>/<?php echo $cat->id; ?>"><span class="glyphicon glyphicon-th-list"> <?php echo $cat->name; ?> </span></a>
+            
+        </p>
+        <p><span class="glyphicon glyphicon-time"> <?php echo $post->created_at->format('t M Y'); ?> </span></p>
+    </div>
+</div>
+
+<div class="well">
+
+    <div class="text-right">
+        <button class="btn btn-success" data-toggle="modal" data-target="#myModal">
+          <span class="glyphicon glyphicon-comment"></span> Leave a Comment
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Leave a Comments</h4>
+          </div>
+          <?php echo Form::open(array('url' => 'comment','role' => 'form', 'files' => true)); ?>
+          <div class="modal-body">
+                <div class="form-group">
+                <input type="hidden" value="<?php echo $post->id; ?>" name="id">
+                <?php echo Form::label('name', 'Your Name'); ?>
+                <?php echo Form::text('name', Input::old('name'), array('class' => 'form-control', 'placeholder' => 'Enter Your Name')); ?>
+                <?php echo Form::label('comment', 'Comment'); ?>
+                <?php echo Form::textarea('comment', Input::old('comment'), array('class' => 'form-control', 'placeholder' => 'Enter Your Comment')); ?>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <?php echo Form::submit('Send', array('class' => 'btn btn-primary')); ?> 
+          </div>
+          <?php echo Form::close(); ?>
+        </div>
+      </div>
+    </div>
+
+    <?php foreach($comment as $key => $value): ?>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-12">
+            <span class="glyphicon glyphicon-user"></span> <?php echo $value->name; ?>
+            <span class="pull-right"><?php echo $value->created_at->format('t M Y'); ?></span>
+            <p><?php echo $value->content; ?></p>
+        </div>
+    </div>
+    <?php endforeach; ?>
+
+</div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.front', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

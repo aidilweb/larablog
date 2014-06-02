@@ -1,0 +1,47 @@
+ 
+<?php $__env->startSection('navbar'); ?>
+@parent
+ 
+<?php $__env->stopSection(); ?>
+ 
+<?php $__env->startSection('content'); ?>
+<div class="thumbnail">
+    <div class="caption-full">
+        <h3>Crate a Post</h3>
+        <hr>
+        <!-- notifikasi error -->
+		<?php echo HTML::ul($errors->all()); ?>
+		<?php echo Form::open(array('url' => 'admin/post','role' => 'form', 'files' => true)); ?>
+		    <div class="form-group">
+				<?php echo Form::label('title', 'Title'); ?>
+		        <?php echo Form::text('title', Input::old('title'), array('class' => 'form-control', 'placeholder' => 'Enter Title')); ?>
+		    </div>
+		    <div class="form-group">
+				<?php echo Form::label('content', 'Content'); ?>
+				<?php echo Form::textarea('content', Input::old('content'), array('class' => 'form-control ckeditor')); ?>
+		    </div>
+			<div class="form-group">
+				<?php echo Form::label('category', 'Category'); ?>
+				<?php echo Form::select('category', Category::all()->lists('name', 'id'), Input::old('category'), array('class' => 'form-control')); ?>
+		    </div>
+			 
+			<div class="form-group">
+				<?php echo Form::label('picture', 'Picture'); ?>
+				<?php echo Form::file('picture', array('class' => 'form-control')); ?>
+		    </div>
+
+			<div class="form-group">
+				<?php echo Form::label('status', 'Status'); ?>
+				<?php echo Form::select('status', array('publish' => 'Publish', 'draft' => 'Draft'), Input::old('status'), array('class' => 'form-control')); ?>
+		    </div>
+			
+			<?php echo Form::submit('Publish', array('class' => 'btn btn-primary')); ?> 
+		<?php echo Form::close(); ?>
+                
+    </div>
+</div>
+ 
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

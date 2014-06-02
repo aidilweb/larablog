@@ -1,0 +1,47 @@
+ 
+<?php $__env->startSection('navbar'); ?>
+@parent
+ 
+<?php $__env->stopSection(); ?>
+ 
+<?php $__env->startSection('content'); ?>
+<div class="thumbnail">
+    <div class="caption-full">
+        <h3>Setting</h3>
+        <hr>
+        <p>
+        <ul class="nav nav-pills">
+		  <li class="active"><a href="<?php echo URL::to('admin/setting'); ?>">Settings</a></li>
+		  <li><a href="<?php echo URL::to('admin/user'); ?>">Email & Password</a></li>
+		</p>
+		<br><br>
+ 		 <!-- notifikasi messages -->
+		<?php if (Session::has('message')): ?>
+		    <div class="alert alert-info"><?php echo Session::get('message'); ?></div>
+		<?php endif; ?>
+		 
+		<!-- notifikasi error -->
+		<?php echo HTML::ul($errors->all()); ?>
+		<?php echo Form::model($setting, array('route' => array('admin.setting.update', $setting->id), 'files'=> true, 'enctype' => 'multipart/form-data', 'method' => 'PUT', 'role' => 'form')); ?>
+		    <div class="form-group">
+				<?php echo Form::label('title', 'Blog Title'); ?>
+		        <?php echo Form::text('title', Input::old('title'), array('class' => 'form-control', 'placeholder' => 'Enter BlogTitle')); ?>
+		    </div>
+			<div class="form-group">
+				<?php echo Form::label('slogan', 'Blog Slogan'); ?>
+		        <?php echo Form::text('slogan', Input::old('slogan'), array('class' => 'form-control', 'placeholder' => 'Enter Blog Slogan')); ?>
+		    </div>
+			<div class="form-group">
+				<?php echo Form::label('footer', 'Footer Text'); ?>
+		        <?php echo Form::text('footer', Input::old('footer'), array('class' => 'form-control', 'placeholder' => 'Enter Footer Text')); ?>
+		    </div>
+			<?php echo Form::submit('Save', array('class' => 'btn btn-primary')); ?> 
+		<?php echo Form::close(); ?>
+                
+    </div>
+</div>
+ 
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

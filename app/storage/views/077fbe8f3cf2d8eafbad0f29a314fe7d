@@ -1,0 +1,34 @@
+ 
+<?php $__env->startSection('navbar'); ?>
+@parent
+ 
+<?php $__env->stopSection(); ?>
+ 
+<?php $__env->startSection('content'); ?>
+<?php foreach($post as $key => $value): ?>
+<div class="thumbnail">
+    <?php if (!empty($value->picture)): ?>
+    <img class="img-responsive" width="800" src="../pictures/<?php echo $value->picture; ?>" alt="">
+    <?php endif; ?>
+    <div class="caption-full">
+        <h3><a href="<?php echo URL::to('post'); ?>/<?php echo $value->id; ?>"><?php echo $value->title; ?></a></h3>
+        </h4>
+        <?php echo nl2br(Str::words($value->content, 80)); ?>
+    </div>
+    <div class="ratings">                        
+    <hr>
+        <p><?php $cat = Category::find($value->category_id); ?>
+            <a href="<?php echo URL::to('kategori'); ?>/<?php echo $cat->id; ?>"><span class="glyphicon glyphicon-th-list"> <?php echo $cat->name; ?> </span></a>
+        </p>
+        <p><span class="glyphicon glyphicon-time"> <?php echo $value->created_at->format('t M Y'); ?> </span></p>
+    </div>
+</div>
+<?php endforeach; ?>
+<div class="pagination">
+    <div class="links">
+        <?php echo $post->links(); ?>
+    </div>
+    <!-- end links -->
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.front', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,71 @@
+ 
+<?php $__env->startSection('navbar'); ?>
+@parent
+ 
+<?php $__env->stopSection(); ?>
+ 
+<?php $__env->startSection('content'); ?>
+<div class="thumbnail">
+    <div class="caption-full">
+        <h3>Posts</h3>
+        <hr>
+        <p>
+        <ul class="nav nav-pills">
+		  <li class="active"><a href="<?php echo URL::to('admin/post'); ?>">Post</a></li>
+		  <li><a href="<?php echo URL::to('admin/category'); ?>">Category</a></li>
+		</p>
+		<br><br>
+        <!-- notifikasi messages -->
+		<?php if (Session::has('message')): ?>
+		    <div class="alert alert-info"><?php echo Session::get('message'); ?></div>
+		<?php endif; ?>
+		 
+		<table class="table table-striped table-bordered">
+		    <thead>
+		        <tr>
+		            <th class="col-md-1">Id</th>
+		            <th class="col-md-4">Title</th>
+		            <th class="col-md-3">Category</th>
+		            <th class="col-md-1">Status</th>
+		            <th class="col-md-3">Actions</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    <?php foreach($post as $key => $value): ?>
+		        <tr>
+		            <td><?php echo $value->id; ?></td>
+		            <td><?php echo $value->title; ?></td>
+		            <?php $category = Category::find($value->category_id); ?>
+		            <td><?php echo $category->name; ?></td>
+		            <td><?php echo $value->status; ?></td>
+		            <td>
+		                <?php echo Form::open(array('url' => 'admin/post/' . $value->id, 'class' => 'pull-right')); ?>
+		                <?php echo Form::hidden('_method', 'DELETE'); ?>
+		                <?php echo Form::submit('Delete', array('class' => 'btn btn-warning')); ?>
+		                <?php echo Form::close(); ?>
+		                
+		                <!-- edit band GET /bands/{id}/edit -->
+		                <a class="btn btn-small btn-info" href="<?php echo URL::to('admin/post/' . $value->id . '/edit'); ?>"><span class="glyphicon glyphicon-edit"> Edit</a>
+		 
+		            </td>
+		        </tr>
+		    <?php endforeach; ?>
+		    </tbody>
+		</table>
+
+
+                
+    </div>
+
+</div>
+<div class="pagination">
+    <div class="links">
+        <?php echo $post->links(); ?>
+    </div>
+    <!-- end links -->
+</div>
+ 
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

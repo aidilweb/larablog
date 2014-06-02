@@ -1,0 +1,30 @@
+
+<?php $__env->startSection('content'); ?>
+	<div class="row vertical-offset-100">
+    	<div class="col-md-4 col-md-offset-4">
+    		<div class="panel panel-default">
+			  	<div class="panel-heading">
+			    	<h3 class="panel-title">Please sign in</h3>
+			 	</div>
+			  	<div class="panel-body">
+			  		<?php if(Session::has('pesan_error')): ?>
+			  		<div class="alert alert-danger"><?php echo Session::get('pesan_error'); ?></div>
+			  		<?php endif; ?>
+			    	<?php echo Form::open(array('action' => 'UserController@authenticate', 'role' => 'form', 'accept-charset' => 'UTF-8')); ?>   
+                    <fieldset>
+			    	  	<div class="form-group">
+			    	  		<?php echo Form::text('email', '', array('class' => 'form-control', 'placeholder' => 'Email Addres', 'required' => '', 'autofocus' => '')); ?>			    		    
+			    		</div>
+			    		<div class="form-group">
+			    			<?php echo Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password', 'required' => '')); ?>			    		
+			    		</div>
+			    		<?php echo Form::submit('Login', array('class' => 'btn btn-lg btn-success btn-block')); ?>
+			    	</fieldset>
+			      	<?php echo Form::close(); ?>
+			    </div>
+			</div>
+		</div>
+	</div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.login', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

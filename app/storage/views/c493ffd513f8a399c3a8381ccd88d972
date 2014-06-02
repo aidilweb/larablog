@@ -1,0 +1,17 @@
+ 
+<?php $__env->startSection('navbar'); ?>
+@parent
+ 
+<?php $__env->stopSection(); ?>
+ 
+<?php $__env->startSection('content'); ?>
+<div class="thumbnail">
+    <div class="caption-full">
+        <h3>Dashboard</h3>
+        <hr>
+        <p>Welcome to Larablog panel</p>
+        
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

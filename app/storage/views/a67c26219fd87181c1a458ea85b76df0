@@ -1,0 +1,29 @@
+ 
+<?php $__env->startSection('navbar'); ?>
+@parent
+ 
+<?php $__env->stopSection(); ?>
+ 
+<?php $__env->startSection('content'); ?>
+<div class="thumbnail">
+    <div class="caption-full">
+        <h3>Edit </h3>
+        <hr>
+        <!-- notifikasi error -->
+	<?php echo HTML::ul($errors->all()); ?>
+	<?php echo Form::model($category, array('route' => array('admin.category.update', $category->id), 'method' => 'PUT', 'role' => 'form')); ?>
+	    <div class="form-group">
+			<?php echo Form::label('name', 'Name'); ?>
+	        <?php echo Form::text('name', Input::old('name'), array('class' => 'form-control', 'placeholder' => 'Enter Name')); ?>
+	    </div>
+		<?php echo Form::submit('Save', array('class' => 'btn btn-primary')); ?> 
+	<?php echo Form::close(); ?>
+
+                
+    </div>
+</div>
+ 
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,43 @@
+ 
+<?php $__env->startSection('navbar'); ?>
+@parent
+ 
+<?php $__env->stopSection(); ?>
+ 
+<?php $__env->startSection('content'); ?>
+<div class="thumbnail">
+    <div class="caption-full">
+        <h3>Email & Password</h3>
+        <hr>
+        <p>
+        <ul class="nav nav-pills">
+		  <li><a href="<?php echo URL::to('admin/setting'); ?>">Settings</a></li>
+		  <li class="active"><a href="<?php echo URL::to('admin/user'); ?>">Email & Password</a></li>
+		</p>
+		<br><br>
+ 		 <!-- notifikasi messages -->
+		<?php if (Session::has('message')): ?>
+		    <div class="alert alert-info"><?php echo Session::get('message'); ?></div>
+		<?php endif; ?>
+		 
+		<!-- notifikasi error -->
+		<?php echo HTML::ul($errors->all()); ?>
+		<?php echo Form::model($user, array('route' => array('admin.user.update', $user->id), 'files'=> true, 'enctype' => 'multipart/form-data', 'method' => 'PUT', 'role' => 'form')); ?>
+		    <div class="form-group">
+				<?php echo Form::label('email', 'Email'); ?>
+		        <?php echo Form::text('email', Input::old('email'), array('class' => 'form-control', 'placeholder' => 'Enter Email')); ?>
+		    </div>
+			<div class="form-group">
+				<?php echo Form::label('password', 'Password'); ?>
+		        <?php echo Form::password('password', array('class' => 'form-control', 'placeholder' => 'Enter Password')); ?>
+		    </div>
+			<?php echo Form::submit('Save', array('class' => 'btn btn-primary')); ?> 
+		<?php echo Form::close(); ?>
+                
+    </div>
+</div>
+ 
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
